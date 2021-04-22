@@ -1,9 +1,12 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
+const levenshteinDistance = require("../utils/levenshtein");
 
 function hasText(req, res, next) {
   const { data: { first_string, second_string } = {} } = req.body;
 
   if (first_string && second_string) {
+    res.locals.first_string = first_string;
+    res.locals.second_string = second_string;
     return next();
   }
   next({
@@ -13,7 +16,7 @@ function hasText(req, res, next) {
 }
 
 function hasValidText(req, res, next) {
-  const { data: { first_string, second_string } = {} } = req.body;
+  const { first_string, second_string } = res.locals;
   let validator = /^[a-zA-Z]+$/;
 
   if (!validator.test(first_string) || !validator.test(second_string)) {
@@ -27,16 +30,16 @@ function hasValidText(req, res, next) {
   return next();
 }
 
-async function create(req, res, next) {
-  const newData = ({ first_string, second_string } = req.body.data);
-  console.log(newData);
-  return await res.status(201).json({ data: newData });
+async function calculate(req, res, next) {
+  const { first_string, second_string } = res.locals;
+  const distance = levenshteinDistance(first_string, second_string);
+  return await res.status(201).json({ data: distance });
 }
 
 module.exports = {
-  create: [
+  calculate: [
     asyncErrorBoundary(hasText),
     asyncErrorBoundary(hasValidText),
-    asyncErrorBoundary(create),
+    asyncErrorBoundary(calculate),
   ],
 };

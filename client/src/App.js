@@ -1,38 +1,60 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
-import ErrorAlert from "./ErrorAlert";
-import InputForm from "./InputForm";
+import ErrorAlert from "./layout/ErrorAlert";
+import Greetings from "./layout/Greetings";
+import InputForm from "./distance/InputForm";
+import LevenshteinDistance from "./distance/LevenshteinDistance";
 
 function App() {
   const [data, setData] = useState(null);
+  const [stringState, setStringState] = useState({});
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   fetch("/distance")
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data.message));
-  // }, []);
+  function clearState() {
+    setData(() => null);
+    setError(() => null);
+  }
 
-  function onSubmit(newInputs) {
+  async function calculateDistance(newInputs) {
+    // clear error message and previous results
+    clearState();
+    // get strings from inputForm
+    setStringState(() => newInputs);
     const abortController = new AbortController();
     const signal = abortController.signal;
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    fetch("/distance", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ data: newInputs }),
-      signal,
-    }).catch(setError);
+    try {
+      let response = await fetch("/distance", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: newInputs }),
+        signal,
+      });
+      let results = await response.json();
+      if (response.status === 400) throw results.error;
+      setData(() => results.data);
+    } catch (error) {
+      setError(() => error);
+    }
+    // .catch(setError);
     return () => abortController.abort();
   }
 
   return (
     <div className="App">
       <header className="App-header">
-        <ErrorAlert error={error} />
-        <InputForm onSubmit={onSubmit} />
-        <p>{!data ? "Loading..." : data}</p>
+        <Greetings />
+        <div className="App-alert pb-4">
+          {data ? (
+            <LevenshteinDistance string={stringState} data={data} />
+          ) : error ? (
+            <ErrorAlert error={error} />
+          ) : (
+            <p>Words may not include any spaces or special characters.</p>
+          )}
+        </div>
+        <InputForm calculateDistance={calculateDistance} />
       </header>
     </div>
   );

@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .App-header {
@@ -9,7 +11,27 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1vmin);
   color: white;
+}
+.App-alert {
+  width: 90vw
+}
+
+@media only screen and (min-width: 600px) {
+  .w-90 {
+    width: 90vw;
+  }
+  .jumbotron {
+    padding-bottom: 1em;
+    padding-top: 1em;
+    margin-bottom: 1.4em;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .jumbotron {
+    margin-bottom: 0;
+  }
 }
 
