@@ -1,4 +1,4 @@
-# Assessment: Levenshtein Distance [Click here for Demo](https://levenshtein-distance-git-main-shakursmith.vercel.app
+# Assessment: Levenshtein Distance [Click here for Demo](https://levenshtein-distance-git-main-shakursmith.vercel.app)
 
 > The goal is to build a web page with *React* that makes an *HTTP request* to a backend server that computes the "distance" between two strings.
 
