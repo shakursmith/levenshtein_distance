@@ -7,8 +7,8 @@ import LevenshteinDistance from "./distance/LevenshteinDistance";
 const url = "https://levenshtein-distance-server.vercel.app/distance";
 function App() {
   const [data, setData] = useState(null);
-  const [stringState, setStringState] = useState({});
   const [error, setError] = useState(null);
+  const [stringState, setStringState] = useState({});
 
   function clearState() {
     setData(() => null);
@@ -16,9 +16,7 @@ function App() {
   }
 
   async function calculateDistance(newInputs) {
-    // clear error message and previous results
     clearState();
-    // get strings from inputForm
     setStringState(() => newInputs);
     const abortController = new AbortController();
     const signal = abortController.signal;
