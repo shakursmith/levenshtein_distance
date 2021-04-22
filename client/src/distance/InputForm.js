@@ -24,7 +24,7 @@ function InputForm({
   }
 
   return (
-    <form onSubmit={submitHandler} className="">
+    <form onSubmit={submitHandler}>
       <div className="row mb-3">
         <div className="col-sm pb-2">
           <label>

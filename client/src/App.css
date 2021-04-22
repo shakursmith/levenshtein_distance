@@ -18,19 +18,33 @@
   width: 90vw
 }
 
+@media only screen and (min-width: 600px) {
+  .App-alert {
+    width: 70vw
+  } 
+}
+@media only screen and (min-width: 1024px) {
+  .App-alert {
+    width: 50vw
+  } 
+}
+
 .jumbotron {
     padding-bottom: 1em;
     padding-top: 1em;
     margin-bottom: 1em;
-  }
-
-@media only screen and (min-width: 600px) {
-  .w-90 {
-    width: 90vw;
-  }
-  
 }
 
+@media only screen and (min-width: 800px) {
+  .jumbotron {
+    width: 90vw;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .jumbotron {
+    width: 75vw;
+  }
+}
 @media only screen and (max-width: 600px) {
   .jumbotron {
     margin-bottom: 0;
