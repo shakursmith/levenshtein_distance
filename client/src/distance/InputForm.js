@@ -12,7 +12,7 @@ function InputForm({
   function changeHandler({ target: { name, value } }) {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      [name]: value.trimEnd(),
     }));
   }
 
