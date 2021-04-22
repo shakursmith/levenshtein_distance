@@ -4,7 +4,7 @@ import ErrorAlert from "./layout/ErrorAlert";
 import Greetings from "./layout/Greetings";
 import InputForm from "./distance/InputForm";
 import LevenshteinDistance from "./distance/LevenshteinDistance";
-
+const url = "https://levenshtein-distance-server.vercel.app/";
 function App() {
   const [data, setData] = useState(null);
   const [stringState, setStringState] = useState({});
@@ -23,17 +23,14 @@ function App() {
     const abortController = new AbortController();
     const signal = abortController.signal;
     try {
-      let response = await fetch(
-        "https://levenshtein-distance-server.vercel.app/distance",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ data: newInputs }),
-          signal,
-        }
-      );
+      let response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: newInputs }),
+        signal,
+      });
       let results = await response.json();
       if (response.status === 400) throw results.error;
       setData(() => results.data);
