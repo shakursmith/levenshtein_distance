@@ -4,7 +4,7 @@ import ErrorAlert from "./layout/ErrorAlert";
 import Greetings from "./layout/Greetings";
 import InputForm from "./distance/InputForm";
 import LevenshteinDistance from "./distance/LevenshteinDistance";
-const url = "https://levenshtein-distance-server.vercel.app/";
+const url = "https://levenshtein-distance-server.vercel.app/distance";
 function App() {
   const [data, setData] = useState(null);
   const [stringState, setStringState] = useState({});
